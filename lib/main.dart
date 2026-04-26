@@ -46,39 +46,60 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The background color for the actual page content
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Stack(
         children: [
           CustomScrollView(
             slivers: [
-              // 1. HERO IMAGE HEADER
               SliverAppBar(
-                expandedHeight: 439, // Exact height from your final code
-                pinned: true,        // Keeps the back button visible at the top
+                expandedHeight: 439,
+                pinned: true,
                 backgroundColor: Colors.white,
                 elevation: 0,
-                leading: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.black,
-                  size: 20,
-                ),
+                leading: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.asset(
-                    'assets/images/mainpic.png', // Using your specific asset path
-                    fit: BoxFit.cover,
-                  ),
+                  background: Image.asset('assets/images/mainpic.png', fit: BoxFit.cover),
                 ),
               ),
-
-              // 2. MAIN CONTENT AREA (Placeholder to allow scrolling)
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 1000), 
+              // --- UPDATED: Replacing placeholder with actual Column ---
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildHeaderSection(),
+                      const SizedBox(height: 1000), // Keep temp height for scrolling
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  // --- NEW: Helper method for Price and Share Icon ---
+  Widget _buildHeaderSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          '\$17,00',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Raleway', 
+          ),
+        ),
+        CircleAvatar(
+          backgroundColor: Colors.grey[100],
+          radius: 18,
+          child: const Icon(Icons.ios_share, size: 16, color: Colors.black),
+        ),
+      ],
     );
   }
 }
