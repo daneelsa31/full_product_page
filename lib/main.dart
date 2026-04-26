@@ -45,9 +45,40 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(child: Text("Page Shell Ready")),
+    return Scaffold(
+      // The background color for the actual page content
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              // 1. HERO IMAGE HEADER
+              SliverAppBar(
+                expandedHeight: 439, // Exact height from your final code
+                pinned: true,        // Keeps the back button visible at the top
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leading: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                  size: 20,
+                ),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Image.asset(
+                    'assets/images/mainpic.png', // Using your specific asset path
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
+              // 2. MAIN CONTENT AREA (Placeholder to allow scrolling)
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 1000), 
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
