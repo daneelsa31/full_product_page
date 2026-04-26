@@ -95,8 +95,10 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(height: 15),
                       _buildThumbnailsRow(),
                       const SizedBox(height: 30),
-                      // --- NEW: Specifications ---
                       _buildSpecificationsSection(),
+                      const SizedBox(height: 30),
+                      // --- NEW: Delivery Section ---
+                      _buildDeliverySection(),
                       const SizedBox(height: 1000),
                     ],
                   ),
@@ -192,7 +194,6 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
-  // --- NEW: Specifications Sections & Helper ---
   Widget _buildSpecificationsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,6 +246,52 @@ class ProductDetailPage extends StatelessWidget {
         ),
         const Icon(Icons.arrow_circle_right, color: Colors.blue, size: 28),
       ],
+    );
+  }
+
+  // --- NEW: Delivery Section Helpers ---
+  Widget _buildDeliverySection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("Delivery"),
+        const SizedBox(height: 15),
+        _buildDeliveryBox("Standard", "5-7 days", "\$3,00"),
+        const SizedBox(height: 10),
+        _buildDeliveryBox("Express", "1-2 days", "\$12,00"),
+      ],
+    );
+  }
+
+  Widget _buildDeliveryBox(String type, String days, String price) {
+    return Container(
+      height: 40,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromARGB(255, 113, 185, 245)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 8),
+          Text(
+            type,
+            style: const TextStyle(
+              fontFamily: 'Raleway',
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(width: 10),
+          _buildTag(days, color: Colors.blue.shade50),
+          const Spacer(),
+          Text(
+            price,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
     );
   }
 }
