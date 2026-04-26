@@ -16,22 +16,38 @@ class ProductPreviewFrame extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 238, 237, 237),
       body: Center(
         child: Container(
-          width: 375, // Your final spec
-          margin: const EdgeInsets.symmetric(vertical: 5), // Your final spec
+          width: 375,
+          margin: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(40), // Your final spec
+            borderRadius: BorderRadius.circular(40),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.15), // Your final spec
+                color: Colors.black.withOpacity(0.15),
                 blurRadius: 40,
                 offset: const Offset(0, 20),
               ),
             ],
           ),
-          child: const Center(child: Text("Device Frame Ready")),
+          // --- NEW: Clipping the contents to match the 40px radius ---
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(40),
+            child: const ProductDetailPage(),
+          ),
         ),
       ),
+    );
+  }
+}
+
+class ProductDetailPage extends StatelessWidget {
+  const ProductDetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: Text("Page Shell Ready")),
     );
   }
 }
