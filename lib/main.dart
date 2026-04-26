@@ -55,16 +55,9 @@ class ProductDetailPage extends StatelessWidget {
                 pinned: true,
                 backgroundColor: Colors.white,
                 elevation: 0,
-                leading: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.black,
-                  size: 20,
-                ),
+                leading: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.asset(
-                    'assets/images/mainpic.png',
-                    fit: BoxFit.cover,
-                  ),
+                  background: Image.asset('assets/images/mainpic.png', fit: BoxFit.cover),
                 ),
               ),
               SliverToBoxAdapter(
@@ -85,11 +78,7 @@ class ProductDetailPage extends StatelessWidget {
                           const SizedBox(width: 8),
                           _buildTag("M"),
                           const Spacer(),
-                          const Icon(
-                            Icons.arrow_circle_right,
-                            color: Colors.blue,
-                            size: 28,
-                          ),
+                          const Icon(Icons.arrow_circle_right, color: Colors.blue, size: 28),
                         ],
                       ),
                       const SizedBox(height: 15),
@@ -97,9 +86,11 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(height: 30),
                       _buildSpecificationsSection(),
                       const SizedBox(height: 30),
-                      // --- NEW: Delivery Section ---
                       _buildDeliverySection(),
-                      const SizedBox(height: 1000),
+                      const SizedBox(height: 30),
+                      // --- NEW: Rating & Reviews ---
+                      _buildReviewsSection(),
+                      const SizedBox(height: 1000), 
                     ],
                   ),
                 ),
@@ -111,23 +102,13 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
+  // --- EXISTING HELPERS ---
   Widget _buildHeaderSection() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          '\$17.00',
-          style: TextStyle(
-            fontFamily: 'Raleway',
-            fontSize: 26,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        CircleAvatar(
-          backgroundColor: Colors.grey[100],
-          radius: 18,
-          child: const Icon(Icons.ios_share, size: 16, color: Colors.black),
-        ),
+        const Text('\$17.00', style: TextStyle(fontFamily: 'Raleway', fontSize: 26, fontWeight: FontWeight.w900)),
+        CircleAvatar(backgroundColor: Colors.grey[100], radius: 18, child: const Icon(Icons.ios_share, size: 16, color: Colors.black)),
       ],
     );
   }
@@ -135,25 +116,12 @@ class ProductDetailPage extends StatelessWidget {
   Widget _buildDescription() {
     return const Text(
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam arcu mauris, scelerisque eu mauris id, pretium pulvinar sapien.',
-      style: TextStyle(
-        fontFamily: 'NunitoSans',
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-        color: Colors.black,
-        height: 1.5,
-      ),
+      style: TextStyle(fontFamily: 'NunitoSans', fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black, height: 1.5),
     );
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontFamily: 'Raleway',
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
-      ),
-    );
+    return Text(title, style: const TextStyle(fontFamily: 'Raleway', fontSize: 20, fontWeight: FontWeight.w900));
   }
 
   Widget _buildTag(String label, {bool isSelected = false, Color? color}) {
@@ -169,28 +137,16 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   Widget _buildThumbnailsRow() {
-    final List<String> variantImages = [
-      'assets/images/V1.png',
-      'assets/images/V2.png',
-      'assets/images/V3.png',
-    ];
+    final List<String> variantImages = ['assets/images/V1.png', 'assets/images/V2.png', 'assets/images/V3.png'];
     return Row(
-      children: variantImages
-          .map(
-            (path) => Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 70,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: AssetImage(path),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          )
-          .toList(),
+      children: variantImages.map((path) => Container(
+        margin: const EdgeInsets.only(right: 10),
+        width: 70, height: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          image: DecorationImage(image: AssetImage(path), fit: BoxFit.cover),
+        ),
+      )).toList(),
     );
   }
 
@@ -200,31 +156,11 @@ class ProductDetailPage extends StatelessWidget {
       children: [
         _buildSectionTitle("Specifications"),
         const SizedBox(height: 15),
-        const Text(
-          "Material",
-          style: TextStyle(
-            fontFamily: 'Raleway',
-            fontSize: 17,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+        const Text("Material", style: TextStyle(fontFamily: 'Raleway', fontSize: 17, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
-        Row(
-          children: [
-            _buildTag("Cotton 95%", color: Colors.red.shade50),
-            const SizedBox(width: 8),
-            _buildTag("Nylon 5%", color: Colors.red.shade50),
-          ],
-        ),
+        Row(children: [_buildTag("Cotton 95%", color: Colors.red.shade50), const SizedBox(width: 8), _buildTag("Nylon 5%", color: Colors.red.shade50)]),
         const SizedBox(height: 15),
-        const Text(
-          "Origin",
-          style: TextStyle(
-            fontFamily: 'Raleway',
-            fontSize: 17,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+        const Text("Origin", style: TextStyle(fontFamily: 'Raleway', fontSize: 17, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
         _buildTag("EU", color: Colors.blue.shade50),
         const SizedBox(height: 20),
@@ -237,19 +173,12 @@ class ProductDetailPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: isHeader ? 18 : 14,
-          ),
-        ),
+        Text(text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: isHeader ? 18 : 14)),
         const Icon(Icons.arrow_circle_right, color: Colors.blue, size: 28),
       ],
     );
   }
 
-  // --- NEW: Delivery Section Helpers ---
   Widget _buildDeliverySection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,32 +194,74 @@ class ProductDetailPage extends StatelessWidget {
 
   Widget _buildDeliveryBox(String type, String days, String price) {
     return Container(
+      height: 40, padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 113, 185, 245)), borderRadius: BorderRadius.circular(12)),
+      child: Row(children: [
+        Text(type, style: const TextStyle(fontFamily: 'Raleway', fontSize: 16, fontWeight: FontWeight.w700)),
+        const SizedBox(width: 10), _buildTag(days, color: Colors.blue.shade50),
+        const Spacer(), Text(price, style: const TextStyle(fontWeight: FontWeight.bold)),
+      ]),
+    );
+  }
+
+  // --- NEW: RATING & REVIEWS SECTION [cite: 37-41, 54-61, 77-79] ---
+  Widget _buildReviewsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("Rating & Reviews"),
+        const SizedBox(height: 15),
+        Row(
+          children: [
+            ...List.generate(4, (index) => const Icon(Icons.star, color: Colors.orangeAccent, size: 20)),
+            const Icon(Icons.star_outline, color: Colors.orangeAccent, size: 20),
+            const SizedBox(width: 8),
+            _buildTag("4/5", color: Colors.blue.shade50),
+          ],
+        ),
+        const SizedBox(height: 20),
+        _buildReviewerCard(),
+        const SizedBox(height: 20),
+        _buildActionBtn("View All Reviews", const Color(0xFF0055FF), isFullWidth: true),
+      ],
+    );
+  }
+
+  Widget _buildReviewerCard() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CircleAvatar(
+          radius: 24,
+          backgroundColor: Colors.white,
+          child: CircleAvatar(radius: 20, backgroundImage: AssetImage('assets/images/MP2.png')),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Veronika", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              Row(children: List.generate(5, (index) => const Icon(Icons.star, color: Colors.orangeAccent, size: 14))),
+              const SizedBox(height: 8),
+              const Text(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...",
+                style: TextStyle(fontFamily: 'NunitoSans', fontSize: 12, fontWeight: FontWeight.w900),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionBtn(String text, Color color, {bool isFullWidth = false}) {
+    return Container(
       height: 40,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 113, 185, 245)),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: 8),
-          Text(
-            type,
-            style: const TextStyle(
-              fontFamily: 'Raleway',
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(width: 10),
-          _buildTag(days, color: Colors.blue.shade50),
-          const Spacer(),
-          Text(
-            price,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 8),
-        ],
+      width: isFullWidth ? double.infinity : null,
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
+      child: Center(
+        child: Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
