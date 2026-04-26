@@ -88,9 +88,11 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(height: 30),
                       _buildDeliverySection(),
                       const SizedBox(height: 30),
-                      // --- NEW: Rating & Reviews ---
                       _buildReviewsSection(),
-                      const SizedBox(height: 1000), 
+                      const SizedBox(height: 40),
+                      // --- NEW: Most Popular Section ---
+                      _buildMostPopularSection(),
+                      const SizedBox(height: 1000),
                     ],
                   ),
                 ),
@@ -102,7 +104,23 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
-  // --- EXISTING HELPERS ---
+  // --- REUSABLE HELPERS ---
+  Widget _buildSectionTitle(String title) {
+    return Text(title, style: const TextStyle(fontFamily: 'Raleway', fontSize: 20, fontWeight: FontWeight.w900));
+  }
+
+  Widget _buildTag(String label, {bool isSelected = false, Color? color}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color ?? (isSelected ? Colors.grey[100] : Colors.white),
+        border: Border.all(color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(label, style: const TextStyle(fontSize: 12)),
+    );
+  }
+
   Widget _buildHeaderSection() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,22 +135,6 @@ class ProductDetailPage extends StatelessWidget {
     return const Text(
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam arcu mauris, scelerisque eu mauris id, pretium pulvinar sapien.',
       style: TextStyle(fontFamily: 'NunitoSans', fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black, height: 1.5),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Text(title, style: const TextStyle(fontFamily: 'Raleway', fontSize: 20, fontWeight: FontWeight.w900));
-  }
-
-  Widget _buildTag(String label, {bool isSelected = false, Color? color}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color ?? (isSelected ? Colors.grey[100] : Colors.white),
-        border: Border.all(color: Colors.grey.shade200),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(label, style: const TextStyle(fontSize: 12)),
     );
   }
 
@@ -158,11 +160,11 @@ class ProductDetailPage extends StatelessWidget {
         const SizedBox(height: 15),
         const Text("Material", style: TextStyle(fontFamily: 'Raleway', fontSize: 17, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
-        Row(children: [_buildTag("Cotton 95%", color: Colors.red.shade50), const SizedBox(width: 8), _buildTag("Nylon 5%", color: Colors.red.shade50)]),
+        Row(children: [_buildTag("Cotton 95%", color: Color(0xFFFFEBEE)), const SizedBox(width: 8), _buildTag("Nylon 5%", color: Color(0xFFFFEBEE))]),
         const SizedBox(height: 15),
         const Text("Origin", style: TextStyle(fontFamily: 'Raleway', fontSize: 17, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
-        _buildTag("EU", color: Colors.blue.shade50),
+        _buildTag("EU", color: Color(0xFFE3F2FD)),
         const SizedBox(height: 20),
         _buildArrowLink("Size guide"),
       ],
@@ -198,13 +200,12 @@ class ProductDetailPage extends StatelessWidget {
       decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 113, 185, 245)), borderRadius: BorderRadius.circular(12)),
       child: Row(children: [
         Text(type, style: const TextStyle(fontFamily: 'Raleway', fontSize: 16, fontWeight: FontWeight.w700)),
-        const SizedBox(width: 10), _buildTag(days, color: Colors.blue.shade50),
+        const SizedBox(width: 10), _buildTag(days, color: Color(0xFFE3F2FD)),
         const Spacer(), Text(price, style: const TextStyle(fontWeight: FontWeight.bold)),
       ]),
     );
   }
 
-  // --- NEW: RATING & REVIEWS SECTION [cite: 37-41, 54-61, 77-79] ---
   Widget _buildReviewsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +217,7 @@ class ProductDetailPage extends StatelessWidget {
             ...List.generate(4, (index) => const Icon(Icons.star, color: Colors.orangeAccent, size: 20)),
             const Icon(Icons.star_outline, color: Colors.orangeAccent, size: 20),
             const SizedBox(width: 8),
-            _buildTag("4/5", color: Colors.blue.shade50),
+            _buildTag("4/5", color: Color(0xFFE3F2FD)),
           ],
         ),
         const SizedBox(height: 20),
@@ -262,6 +263,79 @@ class ProductDetailPage extends StatelessWidget {
       decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
       child: Center(
         child: Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+
+  // --- NEW: MOST POPULAR SECTION HELPERS ---
+  Widget _buildHeaderSectionWithSeeAll() {
+    return Row(
+      children: [
+        _buildSectionTitle("Most Popular"),
+        const Spacer(),
+        const Text("See All", style: TextStyle(fontSize: 16, color: Colors.black87)),
+        const SizedBox(width: 8),
+        const Icon(Icons.arrow_circle_right, color: Colors.blue, size: 32),
+      ],
+    );
+  }
+
+  Widget _buildMostPopularSection() {
+    final List<Map<String, String>> popularItems = [
+      {'image': 'assets/images/MP1.png', 'likes': '1780', 'tag': 'New'},
+      {'image': 'assets/images/MP2.png', 'likes': '1780', 'tag': 'Sale'},
+      {'image': 'assets/images/MP3.png', 'likes': '1780', 'tag': 'Hot'},
+    ];
+
+    return Column(
+      children: [
+        _buildHeaderSectionWithSeeAll(),
+        const SizedBox(height: 15),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: popularItems.map((item) {
+              return _buildSmallProduct(item['image']!, item['likes']!, item['tag']!);
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmallProduct(String path, String likes, String tag) {
+    return Container(
+      width: 130,
+      margin: const EdgeInsets.only(right: 12, bottom: 10),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset(path, height: 130, width: 130, fit: BoxFit.cover),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Text(likes, style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(width: 2),
+              const Icon(Icons.favorite, color: Colors.blue, size: 16),
+              const Spacer(),
+              Text(tag, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+            ],
+          ),
+        ],
       ),
     );
   }
