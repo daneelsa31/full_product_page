@@ -90,9 +90,11 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(height: 30),
                       _buildReviewsSection(),
                       const SizedBox(height: 40),
-                      // --- NEW: Most Popular Section ---
                       _buildMostPopularSection(),
-                      const SizedBox(height: 1000),
+                      const SizedBox(height: 40),
+                      // --- NEW: You Might Like Section ---
+                      _buildYouMightLikeSection(),
+                      const SizedBox(height: 140), // Final space for bottom bar [cite: 20]
                     ],
                   ),
                 ),
@@ -267,7 +269,6 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
-  // --- NEW: MOST POPULAR SECTION HELPERS ---
   Widget _buildHeaderSectionWithSeeAll() {
     return Row(
       children: [
@@ -286,7 +287,6 @@ class ProductDetailPage extends StatelessWidget {
       {'image': 'assets/images/MP2.png', 'likes': '1780', 'tag': 'Sale'},
       {'image': 'assets/images/MP3.png', 'likes': '1780', 'tag': 'Hot'},
     ];
-
     return Column(
       children: [
         _buildHeaderSectionWithSeeAll(),
@@ -305,36 +305,64 @@ class ProductDetailPage extends StatelessWidget {
 
   Widget _buildSmallProduct(String path, String likes, String tag) {
     return Container(
-      width: 130,
-      margin: const EdgeInsets.only(right: 12, bottom: 10),
-      padding: const EdgeInsets.all(8),
+      width: 130, margin: const EdgeInsets.only(right: 12, bottom: 10), padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        color: Colors.white, borderRadius: BorderRadius.circular(20),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))],
       ),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.asset(path, height: 130, width: 130, fit: BoxFit.cover),
-          ),
+          ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.asset(path, height: 130, width: 130, fit: BoxFit.cover)),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              Text(likes, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(width: 2),
-              const Icon(Icons.favorite, color: Colors.blue, size: 16),
-              const Spacer(),
-              Text(tag, style: const TextStyle(color: Colors.grey, fontSize: 14)),
-            ],
+          Row(children: [Text(likes, style: const TextStyle(fontWeight: FontWeight.bold)), const SizedBox(width: 2), const Icon(Icons.favorite, color: Colors.blue, size: 16), const Spacer(), Text(tag, style: const TextStyle(color: Colors.grey, fontSize: 14))]),
+        ],
+      ),
+    );
+  }
+
+  // --- NEW: YOU MIGHT LIKE SECTION HELPERS [cite: 45-47, 67-73] ---
+  Widget _buildYouMightLikeSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("You Might Like"),
+        const SizedBox(height: 20),
+        Wrap(
+          spacing: 15, runSpacing: 20, alignment: WrapAlignment.spaceBetween,
+          children: [
+            _buildGridItem('assets/images/YML1.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+            _buildGridItem('assets/images/YML2.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+            _buildGridItem('assets/images/YML3.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+            _buildGridItem('assets/images/YML4.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+            _buildGridItem('assets/images/YML5.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+            _buildGridItem('assets/images/YML6.png', 'Lorem ipsum dolor sit amet consectetur', '\$17.00'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGridItem(String path, String title, String price) {
+    return SizedBox(
+      width: 160,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(16),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 15, offset: const Offset(0, 8))],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(path, height: 180, width: double.infinity, fit: BoxFit.cover),
+            ),
           ),
+          const SizedBox(height: 12),
+          Text(title, style: const TextStyle(fontFamily: 'NunitoSans', fontSize: 13, color: Colors.black87, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 4),
+          Text(price, style: const TextStyle(fontFamily: 'Raleway', fontSize: 16, fontWeight: FontWeight.w900)),
         ],
       ),
     );
