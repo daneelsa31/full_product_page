@@ -61,7 +61,6 @@ class ProductDetailPage extends StatelessWidget {
                   background: Image.asset('assets/images/mainpic.png', fit: BoxFit.cover),
                 ),
               ),
-              // --- UPDATED: Replacing placeholder with actual Column ---
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -69,7 +68,13 @@ class ProductDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildHeaderSection(),
-                      const SizedBox(height: 1000), // Keep temp height for scrolling
+                      const SizedBox(height: 15),
+                      // --- NEW: Description Section ---
+                      _buildDescription(),
+                      const SizedBox(height: 25),
+                      // Testing the title helper
+                      _buildSectionTitle("Variations"),
+                      const SizedBox(height: 1000), 
                     ],
                   ),
                 ),
@@ -81,25 +86,38 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
-  // --- NEW: Helper method for Price and Share Icon ---
+  // Header helper from previous commit
   Widget _buildHeaderSection() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          '\$17,00',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway', 
-          ),
-        ),
-        CircleAvatar(
-          backgroundColor: Colors.grey[100],
-          radius: 18,
-          child: const Icon(Icons.ios_share, size: 16, color: Colors.black),
-        ),
+        const Text('\$17,00', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, fontFamily: 'Raleway')),
+        CircleAvatar(backgroundColor: Colors.grey[100], radius: 18, child: const Icon(Icons.ios_share, size: 16, color: Colors.black)),
       ],
+    );
+  }
+
+  // --- NEW: Helper for Description ---
+  Widget _buildDescription() {
+    return const Text(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam arcu mauris, scelerisque eu mauris id, pretium pulvinar sapien.',
+      style: TextStyle(
+        color: Colors.black54,
+        height: 1.5,
+        fontFamily: 'NunitoSans', // Matching your final font spec
+      ),
+    );
+  }
+
+  // --- NEW: Reusable Section Title ---
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Raleway', // Matching your final font spec
+      ),
     );
   }
 }
